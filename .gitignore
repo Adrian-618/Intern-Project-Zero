@@ -1,4 +1,5 @@
-# datasets
 data/*
-
+badNet/__pycache__/
+ML-Leak/__pycache__/
+*.pyc
 *.7z

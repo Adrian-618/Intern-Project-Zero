@@ -47,6 +47,8 @@ def dataloader(dataset="cifar", batch_size_train=64, batch_size_test=1000, split
         return shadow_set_loader, shadow_out_loader,target_set_loader, target_out_loader
 
 def getData(dataset="cifar", batch_size_train=64, batch_size_test=1000):
+    if dataset == 'mnist':
+        return dataloader(dataset, batch_size_train, batch_size_test)
     dataPath = '../data/CIFAR_pre'
     targetTrain, targetTrainLabel  = load_data(dataPath + '/targetTrain.npz')
     targetTest,  targetTestLabel   = load_data(dataPath + '/targetTest.npz')
@@ -56,10 +58,10 @@ def getData(dataset="cifar", batch_size_train=64, batch_size_test=1000):
     targetTestData = TensorDataset(torch.tensor(targetTest),torch.tensor(targetTestLabel).type(torch.LongTensor))
     shadowTrainData = TensorDataset(torch.tensor(shadowTrainRaw),torch.tensor(shadowTrainLabel).type(torch.LongTensor))
     shadowTestData = TensorDataset(torch.tensor(shadowTestRaw),torch.tensor(shadowTestLabel).type(torch.LongTensor))
-    targetTrainLoader = DataLoader(dataset = targetTrainData, batch_size = 64, shuffle = True)
-    shadowTrainLoader = DataLoader(dataset = shadowTrainData, batch_size = 64, shuffle = True)
-    targetTestLoader = DataLoader(dataset = targetTestData, batch_size = 64, shuffle = False)
-    shadowTestLoader = DataLoader(dataset = shadowTestData, batch_size = 64, shuffle = False)
+    targetTrainLoader = DataLoader(dataset = targetTrainData, batch_size = batch_size_train, shuffle = True)
+    shadowTrainLoader = DataLoader(dataset = shadowTrainData, batch_size = batch_size_train, shuffle = True)
+    targetTestLoader = DataLoader(dataset = targetTestData, batch_size = batch_size_train, shuffle = False)
+    shadowTestLoader = DataLoader(dataset = shadowTestData, batch_size = batch_size_train, shuffle = False)
     return targetTrainLoader, targetTestLoader, shadowTrainLoader, shadowTestLoader
 
 def load_data(data_name):
@@ -83,8 +85,9 @@ def generateAttackData(shadow_data=[],shadow_label=[],target_data=[],target_labe
         shadowY = shadow_label
 	
     targetX = clipDataTopX(targetX,top=topX)
-    print(targetX)
+    # print(targetX)
     shadowX = clipDataTopX(shadowX,top=topX)
+    # print(shadowX)
     targetY= targetY.astype('float32')
     shadowY= shadowY.astype('float32')
     train_dataset = TensorDataset(torch.tensor(targetX),torch.tensor(targetY).unsqueeze(1))

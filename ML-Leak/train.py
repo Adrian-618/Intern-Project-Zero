@@ -6,24 +6,29 @@ from sklearn.metrics import classification_report
 import numpy as np
 
 # Contains functions for model training and evaluation and for training and evaluating the attacker model
-
-def train(model, data_loader, criterion, optimizer, verbose=True):
+def train(model, epochs, data_loader, test_data_loader, criterion, optimizer, attack = False, verbose = True):
     """
     Function for model training step
     """
-    running_loss = 0
-    model.train()
-    for step,  (batch_img, batch_label)in enumerate(tqdm(data_loader)):
-        optimizer.zero_grad()  # Set gradients to zero
-        output = model(batch_img.cuda())  # Forward pass
-        loss = criterion(output, batch_label.cuda())
-        loss.backward()  # Backpropagation
-        optimizer.step()  # Update weights
-        running_loss += loss
-        # Print loss for each minibatch
-        if verbose:
-            print("[%d/%d] loss = %f" % (step, len(data_loader), loss.item()))
-    return running_loss
+    for epoch in range(epochs):
+        running_loss = 0
+        model.train()
+        for step,  (batch_img, batch_label)in enumerate(data_loader):
+        # for step,  (batch_img, batch_label)in enumerate(tqdm(data_loader)):
+            optimizer.zero_grad()  # Set gradients to zero
+            output = model(batch_img.cuda())  # Forward pass
+            loss = criterion(output, batch_label.cuda())
+            loss.backward()  # Backpropagation
+            optimizer.step()  # Update weights
+            running_loss += loss
+            # Print loss for each minibatch
+            if verbose:
+                print("[%d/%d] loss = %f" % (step, len(data_loader), loss.item()))
+        if (epoch+1) % 5 == 0:
+            accuracy_train = eval_model(model, data_loader, report=False, attacker=attack)
+            accuracy_test = eval_model(model, test_data_loader, report=False, attacker=attack)
+            print("Model: epoch[%d/%d] Train loss: %.5f training set accuracy: %.5f  test set accuracy: %.5f"
+                    % (epoch + 1, epochs, running_loss, accuracy_train, accuracy_test))
 
 
 # Trains attack model, which can classify a data sample as a member or not of the training set, by using shadow
@@ -56,11 +61,10 @@ def eval_model(model, test_loader, report=True, attacker = False):
     preds = []
     with torch.no_grad():  # Disable gradient calculation
         model.eval()
-        for step, (batch_img, batch_label) in enumerate(tqdm(test_loader)):
+        for step, (batch_img, batch_label) in enumerate(test_loader):
 
             output = model(batch_img.cuda())
             # print(output)
-
             if attacker == True:
                 predicted = torch.where(output>0.5, 1, 0)
                 # print(predicted)
@@ -75,8 +79,6 @@ def eval_model(model, test_loader, report=True, attacker = False):
             correct += torch.sum(batch_label.cuda() == predicted)
 
     accuracy = 100 * (correct/total)
-    # print(correct)
-    # print(total)
     if report:
         gt = torch.cat(gt, 0)
         preds = torch.cat(preds, 0)

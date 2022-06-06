@@ -4,7 +4,7 @@ import torchvision
 from torch.autograd import Variable
 from torchvision import datasets, transforms
 from torch.utils.data import DataLoader
-from sklearn.metrics import classification_report, accuracy_score
+from sklearn.metrics import  accuracy_score
 import argparse
 from Attacker import Backdoor_Atk
 from model import BadNet
@@ -52,7 +52,6 @@ def main():
     for epoch in range(epochs) :
         # train
         sum_loss = 0.0
-        train_acc = 0
         for data in train_data_loader:
             inputs, lables = data
             inputs, lables = Variable(inputs).cuda(), Variable(lables).cuda()
@@ -89,28 +88,6 @@ def eval(model, data_loader, batch_size=64, mode='backdoor'):
     y_true = torch.cat(y_true,0)
     y_predict = torch.cat(y_predict,0)
     return accuracy_score(y_true.cpu(), y_predict.cpu())
-
-def print_model_perform(model, data_loader):
-    model.eval() # switch to eval mode
-    y_true = []
-    y_predict = []
-    for step, (batch_x, batch_y) in enumerate(data_loader):
-        batch_y_predict = model(batch_x)
-        batch_y_predict = torch.argmax(batch_y_predict, dim=1)
-        y_predict.append(batch_y_predict)
-        
-        batch_y = torch.argmax(batch_y, dim=1)
-        y_true.append(batch_y)
-    
-    y_true = torch.cat(y_true,0)
-    y_predict = torch.cat(y_predict,0)
-    try:
-        target_names_idx = set.union(set(np.array(y_true.cpu())), set(np.array(y_predict.cpu())))
-        target_names = [data_loader.dataset.classes[i] for i in target_names_idx]
-        print(classification_report(y_true.cpu(), y_predict.cpu(), target_names=target_names))
-    except ValueError as e:
-        print(e)
-
 
 if __name__ == "__main__":
     main()
