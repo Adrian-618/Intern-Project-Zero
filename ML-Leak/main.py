@@ -10,12 +10,12 @@ import argparse
 import matplotlib.pyplot as plt
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--dataset', default='cifar', help='The dataset of choice between "cifar" and "mnist".')
-parser.add_argument('--batch_size', default=64, type=int, help='The batch size used for training.')
+parser.add_argument('--dataset', default='cifar', help='dataset choice,"cifar" or "mnist"')
+parser.add_argument('--batch_size', default=64, type=int, help='batch size for training.')
 parser.add_argument('--epoch', default=50, type=int, help='Number of epochs for shadow and target model.')
 parser.add_argument('--attack_epoch', default=50, type=int, help='Number of epochs for attack model.')
 parser.add_argument('--only_eval', default=False, type=bool, help='If true, only evaluate trained loaded models.')
-parser.add_argument('--only_eval_attacker', default=False, type=bool, help='If true, only evaluate trained loaded models.')
+parser.add_argument('--only_eval_attacker', default=False, type=bool, help='If true, only evaluate trained attacker model.')
 parser.add_argument('--save_new_models', default=False, type=bool, help='If true, trained models will be saved.')
 parser.add_argument('--save_new_models_attacker', default=False, type=bool, help='If true, trained attacker models will be saved.')
 args = parser.parse_args()

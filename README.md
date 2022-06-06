@@ -4,6 +4,7 @@ Tiny coding task for internship
 All the codes are implemented with pytorch
 
 the BadNet demo can be directly excecuted with ```python BadNet.py```
+
 The ML-Leak demo performs the best with preprocessed dataset from original ML-Leak: https://github.com/AhmedSalem2/ML-Leaks 
 
 ## BadNet
@@ -12,7 +13,9 @@ The ML-Leak demo performs the best with preprocessed dataset from original ML-Le
 Adversarial images generated: 6000 Bad Imgs, 54000 Clean Imgs (0.10)
 Adversarial images generated: 0 Bad Imgs, 10000 Clean Imgs (0.00)
 Adversarial images generated: 10000 Bad Imgs, 0 Clean Imgs (1.00)
+
 ------ Train start ---------
+
 Epoch: 1 of 25, Loss:0.034,  Train acc: 0.8522, Test_ori acc: 0.9331, Test_tri acc: 0.1085
 
 Epoch: 2 of 25, Loss:0.024,  Train acc: 0.8685, Test_ori acc: 0.9505, Test_tri acc: 0.1190
@@ -57,10 +60,10 @@ Classification Report Shadow Net:
            7       0.54      0.67      0.60      1000
            8       0.62      0.71      0.66      1000
            9       0.57      0.64      0.60      1000
-
+    
     accuracy                           0.54     10000
-   macro avg       0.54      0.54      0.54     10000
-weighted avg       0.54      0.54      0.54     10000
+    macro avg 0.54    0.54      0.54     10000
+    weighted avg 0.54 0.54    0.54     10000
 
 Classification Report Target Net:
               precision    recall  f1-score   support
@@ -75,17 +78,17 @@ Classification Report Target Net:
            7       0.55      0.65      0.60      1000
            8       0.65      0.70      0.68      1000
            9       0.59      0.67      0.63      1000
-
+    
     accuracy                           0.55     10000
-   macro avg       0.55      0.55      0.55     10000
-weighted avg       0.55      0.55      0.55     10000
+    macro avg 0.55   0.55      0.55     10000
+    weighted avg  0.55  0.55  0.55     10000
 
 Report of Attack Net
               precision    recall  f1-score   support
 
          0.0       0.99      0.69      0.81     10520
          1.0       0.76      0.99      0.86     10520
-
+    
     accuracy                           0.84     21040
-   macro avg       0.87      0.84      0.84     21040
-weighted avg       0.87      0.84      0.84     21040
+    macro avg    0.87     0.84     0.84     21040
+    weighted avg   0.87  0.84    0.84     21040

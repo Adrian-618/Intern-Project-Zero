@@ -10,6 +10,7 @@ from torch.utils.data import TensorDataset
 from torch.utils.data import random_split
 import numpy as np
 import sys
+import os
 
 def dataloader(dataset="cifar", batch_size_train=64, batch_size_test=1000, split_dataset=1):
     # split_dataset is used to mark the usage of the dataset, 0 == testdata, 1 == shadow_train, 2 == shadow_out, 3 = target_train, 4 = target_out
@@ -49,7 +50,10 @@ def dataloader(dataset="cifar", batch_size_train=64, batch_size_test=1000, split
 def getData(dataset="cifar", batch_size_train=64, batch_size_test=1000):
     if dataset == 'mnist':
         return dataloader(dataset, batch_size_train, batch_size_test)
+    if not os.path.exists("../data/CIFAR_pre"):
+        return dataloader(dataset, batch_size_train, batch_size_test)
     dataPath = '../data/CIFAR_pre'
+    print("read preprocessed dataset...")
     targetTrain, targetTrainLabel  = load_data(dataPath + '/targetTrain.npz')
     targetTest,  targetTestLabel   = load_data(dataPath + '/targetTest.npz')
     shadowTrainRaw, shadowTrainLabel  = load_data(dataPath + '/shadowTrain.npz')

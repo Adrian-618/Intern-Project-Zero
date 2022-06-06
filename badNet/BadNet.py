@@ -11,7 +11,7 @@ from model import BadNet
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--dataset', default='mnist') # mnist or cifar10
-parser.add_argument('--trigger_label', type=int, default=0, help='The NO. of trigger label (int, range from 0 to 10, default: 0)')
+parser.add_argument('--trigger_label', type=int, default=0, help='NO. of trigger label (int, range from 0 to 10, default: 0)')
 parser.add_argument('--poi_portion', type=float, default=0.1)
 
 def main():
