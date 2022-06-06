@@ -62,8 +62,8 @@ Classification Report Shadow Net:
            9       0.57      0.64      0.60      1000
     
     accuracy                           0.54     10000
-    macro avg 0.54    0.54      0.54     10000
-    weighted avg 0.54 0.54    0.54     10000
+    macro avg      0.54      0.54      0.54     10000
+    weighted avg   0.54      0.54      0.54     10000
 
 Classification Report Target Net:
               precision    recall  f1-score   support
@@ -80,8 +80,8 @@ Classification Report Target Net:
            9       0.59      0.67      0.63      1000
     
     accuracy                           0.55     10000
-    macro avg 0.55   0.55      0.55     10000
-    weighted avg  0.55  0.55  0.55     10000
+    macro avg      0.55      0.55      0.55     10000
+    weighted avg   0.55      0.55      0.55     10000
 
 Report of Attack Net
               precision    recall  f1-score   support
@@ -90,5 +90,5 @@ Report of Attack Net
          1.0       0.76      0.99      0.86     10520
     
     accuracy                           0.84     21040
-    macro avg    0.87     0.84     0.84     21040
-    weighted avg   0.87  0.84    0.84     21040
+    macro avg      0.87      0.84      0.84     21040
+    weighted avg   0.87      0.84      0.84     21040
